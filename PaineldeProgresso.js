@@ -16,9 +16,10 @@ function menu() {
     console.log("➤ [1] - Adicionar progresso");
     console.log("➤ [2] - Ver progressos");
     console.log('➤ [3] - Excluir Progresso');
-    console.log("➤ [4] - 🔥 Sequência");
-    console.log("➤ [5] - 🏆Nivel");
-    console.log("➤ [6] - Sair");
+    console.log('➤ [4] - Editar Progresso');
+    console.log("➤ [5] - 🔥 Sequência");
+    console.log("➤ [6] - 🏆Nivel");
+    console.log("➤ [7] - Sair");
 
     const opcao = prompt("Escolha: ");
 
@@ -34,16 +35,20 @@ function menu() {
         ApagarProgresso()
         console.log("══════════════════════")
         menu();
-    } else if (opcao === "4") {
+    } else if (opcao === "4"){
+        EditarProgressos();
+        console.log("══════════════════════")
+        menu();
+    }else if (opcao === "5") {
         diasProduzidos();
         console.log("══════════════════════")
         menu();
-    } else if (opcao === "5") {
+    } else if (opcao === "6") {
         ContarProgresso();
         verNivel();
         console.log("══════════════════════")
         menu();
-    } else if (opcao === "6") {
+    } else if (opcao === "7") {
         console.log("👋 Obrigado por usar o Painel de Progresso! Até a próxima!");
     } else {
         console.log("Opção inválida");
@@ -157,7 +162,71 @@ function ApagarProgresso() {
     progressos.splice(indice - 1, 1)
     console.log("Progresso Excluido com sucesso!")
     console.log("══════════════════════")
-    menu();
+}
+
+//função de edição dos dados
+function EditarProgressos() {
+    let categoria = ""
+
+    verProgressos()
+    let indiceEditar = prompt("Selecione qual progresso deseja editar: ")
+
+    console.log("O que deseja editar?")
+    console.log("[1] Tarefa")
+    console.log("[2] Categoria")
+    console.log("[3] Data")
+    const opcaoEdicao = prompt("O que deseja editar: ")
+
+    if (opcaoEdicao === "1") {
+
+        progressos[indiceEditar - 1].tarefa = prompt("Digite a nova tarefa: ");
+
+    } else if (opcaoEdicao === "2") {
+
+        console.log("Selecione a categoria")
+        console.log("➤ [1] Treino 💪 ")
+        console.log("➤ [2] Saúde ❤️ ")
+        console.log("➤ [3] Estudos 📚 ")
+        console.log("➤ [4] Programação 💻 ")
+        console.log("➤ [5] Alimentação 🍎 ")
+        console.log("➤ [6] Lazer 🎮 ")
+        console.log("➤ [7] Outros 📝 ")
+
+        const opcaoCategoria = prompt("Escolha: ");
+
+        if (opcaoCategoria === "1") {
+            categoria = "💪 Treino"
+        } else if (opcaoCategoria === "2") {
+            categoria = "❤️ Saúde"
+        } else if (opcaoCategoria === "3") {
+            categoria = "📚 Estudos"
+        } else if (opcaoCategoria === "4") {
+            categoria = "💻 Programação"
+        } else if (opcaoCategoria === "5") {
+            categoria = "🍎 Alimentação"
+        } else if (opcaoCategoria === "6") {
+            categoria = "🎮 Lazer"
+        } else if (opcaoCategoria === "7") {
+            let categoriaOutros = prompt("📝 Outros qual?: ")
+            categoria = `📝 ${categoriaOutros}`
+        } else {
+            console.log("Opção inválida")
+        }
+
+        progressos[indiceEditar - 1].categoria = categoria
+
+    } else if (opcaoEdicao === "3") {
+
+        progressos[indiceEditar - 1].data = prompt("Digite a nova Data do seu Progresso: DD/MM/AA")
+
+    } else {
+
+        console.log("Opção Inválida")
+
+    }
+
+    console.log("✅ Progresso Editado!")
+    console.log("══════════════════════")
 }
 
 menu();
