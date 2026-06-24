@@ -1,10 +1,11 @@
 const prompt = require('prompt-sync')();
+const chalk = require('chalk');
 
+const linha = chalk.cyan("══════════════════════");
 //inicio do sistema
-console.log("═══════════════════════════════════════════")
-console.log("   BEM VINDO AO SEU PAINEL DE PROGRESSO!  ")
-console.log("═══════════════════════════════════════════")
-
+console.log(linha)
+console.log(chalk.cyan.bold("  BEM VINDO AO SEU PAINEL DE PROGRESSO!  "))
+console.log(linha)
 //armazenamento de dados
 let progressos = [];
 
@@ -12,47 +13,52 @@ let progressos = [];
 
 //menu interativo
 function menu() {
-    console.log("═════════ MENU ═════════")
-    console.log("➤ [1] - Adicionar progresso");
-    console.log("➤ [2] - Ver progressos");
-    console.log('➤ [3] - Excluir Progresso');
-    console.log('➤ [4] - Editar Progresso');
-    console.log("➤ [5] - 🔥 Sequência");
-    console.log("➤ [6] - 🏆Nivel");
-    console.log("➤ [7] - Sair");
+    console.log(chalk.cyan("═════════ MENU ═════════"))
+    console.log(chalk.green("➤ [1] - Adicionar progresso"));
+    console.log(chalk.blue("➤ [2] - Ver progressos"));
+    console.log(chalk.red('➤ [3] - Excluir Progresso'));
+    console.log(chalk.yellow('➤ [4] - Editar Progresso'));
+    console.log(chalk.magenta("➤ [5] - 🔥 Sequência"));
+    console.log(chalk.yellow("➤ [6] - 🏆 Nivel"));
+    console.log(chalk.blue("➤ [7] - Pesquisa"));
+    console.log(chalk.gray("➤ [8] - Sair"));
 
     const opcao = prompt("Escolha: ");
 
     if (opcao === "1") {
         adicionarProgresso();
-        console.log("══════════════════════")
+        console.log(linha)
         menu();
     } else if (opcao === "2") {
         verProgressos();
-        console.log("══════════════════════")
+        console.log(linha)
         menu();
     } else if (opcao === "3") {
         ApagarProgresso()
-        console.log("══════════════════════")
+        console.log(linha)
         menu();
-    } else if (opcao === "4"){
+    } else if (opcao === "4") {
         EditarProgressos();
-        console.log("══════════════════════")
+        console.log(linha)
         menu();
-    }else if (opcao === "5") {
+    } else if (opcao === "5") {
         diasProduzidos();
-        console.log("══════════════════════")
+        console.log(linha)
         menu();
     } else if (opcao === "6") {
         ContarProgresso();
         verNivel();
-        console.log("══════════════════════")
+        console.log(linha)
         menu();
-    } else if (opcao === "7") {
-        console.log("👋 Obrigado por usar o Painel de Progresso! Até a próxima!");
+    }else if (opcao === "7"){
+        Pesquisa();
+        console.log(linha)
+        menu();
+    } else if (opcao === "8") {
+        console.log(chalk.gray("👋 Obrigado por usar o Painel de Progresso! Até a próxima!"));
     } else {
         console.log("Opção inválida");
-        console.log("══════════════════════")
+        console.log(linha)
         menu();
     }
 }
@@ -86,46 +92,47 @@ function adicionarProgresso() {
         let categoriaOutros = prompt("📝 Outros qual?: ")
         categoria = (`📝 ${categoriaOutros}`)
     } else {
-        console.log("Opção invalida")
+        console.log(chalk.red("❌ Opção invalida"))
     }
 
     const data = prompt("Digite a data: DD/MM/AA:")
-    console.log("══════════════════════")
+    console.log(linha)
     progressos.push({
         tarefa: tarefa,
         categoria: categoria,
         data: data
     });
-    console.log("✅ Progresso registrado com sucesso!");
-    console.log("══════════════════════")
+    console.log(chalk.green("✅ Progresso registrado com sucesso!"));
+    console.log(linha)
 }
 
 //função de leitura de dados
 function ContarProgresso() {
-    console.log("══════════════════════")
+    console.log(linha)
     console.log(`Você já registrou ${progressos.length} progressos`);
-    console.log("══════════════════════")
+    console.log(linha)
 }
 
 function verProgressos() {
-    console.log("")
-    console.log("════ 📚 SEUS PROGRESSOS ════")
-    console.log("")
+    console.log(linha)
+    console.log(chalk.blue.bold("════ 📚 SEUS PROGRESSOS ════"))
+    console.log(linha)
 
     if (progressos.length === 0) {
-        console.log("📭 Você não tem progressos adicionados");
+        console.log(chalk.yellow("📭 Você não tem progressos adicionados"));
     } else {
 
         progressos.forEach(function (key, indice) {
 
-            console.log("══════════════════════")
-            console.log(`📌 PROGRESSO #${indice + 1} - ${key.tarefa} | ${key.categoria} | ${key.data}`)
+            console.log(linha)
+            console.log(chalk.white(`📌 PROGRESSO #${indice + 1} - ${key.tarefa} | ${key.categoria} | ${key.data}`))
+
 
         });
 
     }
 
-    console.log("══════════════════════")
+    console.log(linha)
 }
 
 function diasProduzidos() {
@@ -134,22 +141,22 @@ function diasProduzidos() {
     });
 
     let datasUnicas = new Set(datas);
-    console.log("══════════════════════")
-    console.log(`🔥 Sua sequência é de ${datasUnicas.size} dias`)
-    console.log("══════════════════════")
+    console.log(linha)
+    console.log(chalk.magenta(`🔥 Sua sequência é de ${datasUnicas.size} dias`))
+    console.log(linha)
 }
 
 //função de nivel 
 function verNivel() {
 
     if (progressos.length <= 5) {
-        console.log("🏆 NÍVEL ATUAL: Iniciante")
+        console.log(chalk.yellow("🏆 NÍVEL ATUAL: Iniciante"))
         console.log("Continue Registrando Progressos para Evoluir")
     } else if (progressos.length <= 10) {
-        console.log("🏆 NÍVEL ATUAL: CONSISTENTE")
+        console.log(chalk.yellow("🏆 NÍVEL ATUAL: CONSISTENTE"))
         console.log("Continue Assim!")
     } else {
-        console.log("🏆 NÍVEL ATUAL: DISCIPLINADO")
+        console.log(chalk.yellow.bold("🏆 NÍVEL ATUAL: DISCIPLINADO"))
     }
 }
 
@@ -157,11 +164,11 @@ function verNivel() {
 function ApagarProgresso() {
 
     verProgressos()
-    console.log("══════════════════════")
+    console.log(linha)
     let indice = prompt("Selecione o Progresso que deseja excluir: ")
     progressos.splice(indice - 1, 1)
-    console.log("Progresso Excluido com sucesso!")
-    console.log("══════════════════════")
+    console.log(chalk.red("🗑️ Progresso Excluido com sucesso!"))
+    console.log(linha)
 }
 
 //função de edição dos dados
@@ -210,7 +217,7 @@ function EditarProgressos() {
             let categoriaOutros = prompt("📝 Outros qual?: ")
             categoria = `📝 ${categoriaOutros}`
         } else {
-            console.log("Opção inválida")
+            console.log(chalk.red("❌ Opção inválida"))
         }
 
         progressos[indiceEditar - 1].categoria = categoria
@@ -221,12 +228,86 @@ function EditarProgressos() {
 
     } else {
 
-        console.log("Opção Inválida")
+        console.log(chalk.red("❌ Opção Inválida"))
 
     }
 
-    console.log("✅ Progresso Editado!")
-    console.log("══════════════════════")
+    console.log(chalk.green("✅ Progresso Editado!"))
+    console.log(linha)
 }
 
+function Pesquisa() {
+    
+    console.log("➤ [1] Progressos ")
+    console.log("➤ [2] Categorias ")
+    console.log("➤ [3] Datas ")
+    const opcoes = prompt("O que deseja pesquisar?")
+
+    if (opcoes === "1") {
+
+        let pesquisa = prompt("Pesquisar progressos: ").toLowerCase()
+        let encontrou = false;
+
+        progressos.forEach(function (progresso, indice) {
+
+            if (progresso.tarefa.toLowerCase().includes(pesquisa)) {
+                encontrou = true;
+
+                console.log(linha)
+                console.log(chalk.white(`📌 PROGRESSO #${indice + 1} - ${progresso.tarefa} | ${progresso.categoria} | ${progresso.data}`))
+            }
+
+        });
+
+        if (!encontrou) {
+            console.log(chalk.red("❌ Nenhum progresso encontrado!"));
+        }
+
+    } else if (opcoes === "2") {
+
+        let pesquisa = prompt("Digite a categoria que deseja pesquisar: ").toLowerCase()
+        let encontrou = false;
+
+        progressos.forEach(function (progresso, indice) {
+
+            if (progresso.categoria.toLowerCase().includes(pesquisa)) {
+                encontrou = true;
+
+                console.log(linha)
+                console.log(chalk.white(`📌 PROGRESSO #${indice + 1} - ${progresso.tarefa} | ${progresso.categoria} | ${progresso.data}`))
+            }
+
+        });
+
+        if (!encontrou) {
+            console.log(chalk.red("❌ Nenhum progresso encontrado!"));
+        }
+
+    } else if (opcoes === "3") {
+
+        let pesquisa = prompt("Digite a Data que deseja pesquisar: ")
+        let encontrou = false;
+
+        progressos.forEach(function (progresso, indice) {
+
+            if (progresso.data.includes(pesquisa)) {
+                encontrou = true;
+
+                console.log(linha)
+                console.log(chalk.white(`📌 PROGRESSO #${indice + 1} - ${progresso.tarefa} | ${progresso.categoria} | ${progresso.data}`))
+            }
+
+        });
+
+        if (!encontrou) {
+            console.log(chalk.red("❌ Nenhum progresso encontrado!"));
+        }
+
+    } else {
+
+        console.log("Opção inválida")
+        Pesquisa();
+
+    }
+}
 menu();
